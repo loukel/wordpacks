@@ -13,7 +13,10 @@ class PacksController extends Controller
   }
 
   public function show($id) {
-    return view('packs.show', $id);
+    // Load pack json
+    return view('packs.show', [
+      'id' => $id
+    ]);
   }
 
   public function create() {
