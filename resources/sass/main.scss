@@ -1,7 +1,65 @@
-.pack {
-  text-align: center;
+@import "variables";
+
+* {
+  box-sizing: border-box;
 }
 
-.definition {
-  margin-left: 1.5rem;
+.create {
+  font-size: 2rem;
+}
+.create:hover {
+  cursor: pointer;
+}
+
+.pack {
+  min-width: 20rem;
+  text-overflow: ellipsis;
+  // .update {
+  //   display: none;
+  // }
+  .label {
+    width: max-content;
+    max-width: 100%;
+    margin: auto;
+    padding: 0.3rem 1rem 0.3rem 1rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid transparent;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .label:focus {
+    border: solid 1px;
+    border-radius: 0.2rem;
+    overflow: visible;
+    white-space: normal;
+  }
+  // .label:focus + .update {
+  //   display: inline;
+  // }
+}
+
+.sense {
+  counter-reset: section;
+  .card-text {
+    margin-left: 1.5rem;
+  }
+  .card-text::before {
+    content: counter(section) ". \00a0\00a0";
+    white-space: wrap;
+    counter-increment: section;
+  }
+}
+
+.container {
+  position: relative;
+}
+.back {
+  position: absolute;
+  top: 0.2rem;
+}
+
+@media (max-width: 768px) {
+  .pack {
+    min-width: 100%;
+  }
 }

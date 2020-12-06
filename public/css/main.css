@@ -1,8 +1,68 @@
-.pack {
-  text-align: center;
+@charset "UTF-8";
+
+* {
+  box-sizing: border-box;
 }
 
-.definition {
+.create {
+  font-size: 2rem;
+}
+
+.create:hover {
+  cursor: pointer;
+}
+
+.pack {
+  min-width: 20rem;
+  text-overflow: ellipsis;
+}
+
+.pack .label {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  max-width: 100%;
+  margin: auto;
+  padding: 0.3rem 1rem 0.3rem 1rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid transparent;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.pack .label:focus {
+  border: solid 1px;
+  border-radius: 0.2rem;
+  overflow: visible;
+  white-space: normal;
+}
+
+.sense {
+  counter-reset: section;
+}
+
+.sense .card-text {
   margin-left: 1.5rem;
+}
+
+.sense .card-text::before {
+  content: counter(section) ". \A0\A0";
+  white-space: wrap;
+  counter-increment: section;
+}
+
+.container {
+  position: relative;
+}
+
+.back {
+  position: absolute;
+  top: 0.2rem;
+}
+
+@media (max-width: 768px) {
+  .pack {
+    min-width: 100%;
+  }
 }
 
