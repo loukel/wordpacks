@@ -17,24 +17,20 @@
     <div class="card-body">
       <div class="row">
 
-        <div class="col-sm-4 py-2 pack">
-          <div class="card card-body h-100">
-            <div class="h3 label" contenteditable="true" onfocusout="updateLabel(1)">Pack 1 Pack 1 Pack 1 Pack 1 Pack 1
+        @foreach($packs as $pack)
+          <br>
+          <div class="col-sm-4 py-2 pack">
+            <div class="card card-body h-100">
+              <div class="h3 label" contenteditable="true"
+                onfocusout="updateLabel({{ $pack['id'] }})">
+                {{ $pack['label'] }}
+              </div>
+              <button class="btn btn-dark"
+                onClick="window.location = '{{ route('packs.show', $pack['id'] ) }}'">Open</button>
             </div>
-            {{-- <button class="btn btn-success update mb-1">Update label</button> --}}
-            <button class="btn btn-dark"
-              onClick="window.location = '{{ route('packs.show', 1) }}'">Open</button>
           </div>
-        </div>
-        <div class="col-sm-4 py-2 pack">
-          <div class="card card-body h-100">
-            <div class="h3 label" contenteditable="true" onfocusout="updateLabel(1)">Pack 1
-            </div>
-            {{-- <button class="btn btn-success update mb-1">Update label</button> --}}
-            <button class="btn btn-dark"
-              onClick="window.location = '{{ route('packs.show', 2) }}'">Open</button>
-          </div>
-        </div>
+        @endforeach
+
 
       </div>
     </div>
@@ -51,5 +47,5 @@
   }
 
 </script>
-
+{{-- {{-- <button class="btn btn-success update mb-1">Update label</button> --}}
 @endsection

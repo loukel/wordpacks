@@ -4,12 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-// use App\Http\Controllers\Controller;
+use Auth;
+use DB;
 
+use App\Models\Packs;
 class PacksController extends Controller
 {
   public function index() {
-    return view('packs.index');
+    // Lood packs
+    $id = Auth::id();
+    $packs = Packs::where('creator', $id)->get(['label']);
+    return view('packs.index',[
+      'packs' => $packs
+    ]);
   }
 
   public function show($id) {

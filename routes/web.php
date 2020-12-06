@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-// Route::get('/home', 'HomeController@index')->name('home');
-
-// Route::get('/', [App\Http\Controllers\PacksController::class, 'index'])->middleware('auth');
 Route::get('/', 'PacksController@index')->name('packs.index')->middleware('auth');
 
 Route::get('/create', 'PacksController@create')->name('packs.create')->middleware('auth');
