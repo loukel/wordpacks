@@ -5,23 +5,26 @@
 <div class="container">
   <div class="btn btn-dark back" onClick="window.location = '{{ route('packs.index') }}'">
     back</div>
-  <div class="h1 text-center">Label for {{ $id }}
+  <div class="h1 text-center">
+    {{ $label }}
+    <br>
+    <small class="text-muted">Created by: {{ $creator }}</small>
   </div>
-  <div class="card mb-3">
-    <h5 class="card-header">Malign</h5>
-    <div class="card-body">
-      <div class="sense mb-3">
-        <h5 class="card-subtitle font-italic">adjective</h5>
-        <p class="card-text">evil in nature or effect</p>
-        <p class="card-text">evil in nature or effect</p>
-      </div>
-      <div class="sense">
-        <h5 class="card-subtitle font-italic">verb</h5>
-        <p class="card-text">speak about (someone) in a spitefully critical manner.</p>
+  @foreach(array_keys($words) as $word)
+    <div class="card mb-3">
+      <h5 class="card-header">{{ $word }}</h5>
+      <div class="card-body">
+        @foreach($words[$word] as $sense)
+          <div class="sense mb-3">
+            <h5 class="card-subtitle font-italic">{{ $sense['pos'] }}</h5>
+            @foreach($sense['definitions'] as $definition)
+              <p class="card-text">{{ $definition }}</p>
+            @endforeach
+          </div>
+        @endforeach
       </div>
     </div>
-  </div>
-
+  @endforeach
 </div>
 
 @endsection

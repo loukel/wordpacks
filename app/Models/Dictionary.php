@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Jenssegers\Mongodb\Eloquent\Model;
 
-class Packs extends Model
+class Dictionary extends Model
 {
-    use HasFactory;
+  use HasFactory;
+  protected $collection = 'dictionary';
 }
