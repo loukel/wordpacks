@@ -35,7 +35,21 @@
     @foreach(array_reverse($words) as $word)
 
       <div class="card mb-3">
-        <h5 class="card-header bold">{{ $word['word'] }}</h5>
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5>{{ $word['word'] }}</h5>
+          <div class="btn-toolbar" role="group">
+            @if(empty($word['senses']))
+              <button class="btn btn-sm btn-primary float-right">Edit</button>
+            @endif
+            <form
+              action="{{ route('packs.delete', ['pack_id' =>$pack_id,'word'=>$word['word']]) }}"
+              method="post">
+              @csrf
+              @method('DELETE')
+              <button class="btn btn-sm btn-danger float-right ml-1">Delete</button>
+            </form>
+          </div>
+        </div>
         <div class="card-body">
           @if(!empty($word['senses']))
             @foreach($word['senses'] as $sense)

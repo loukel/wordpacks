@@ -68,7 +68,7 @@ class PacksController extends Controller
 
       // Return rogue value if the word is not defined
       if ($word_senses == "[]") {
-        return redirect(route('packs.show', $pack_id))->with('error', 'Word is not defined');
+        return redirect(route('packs.show', $pack_id))->with('error', 'Click to change');
 
       } else {
         // Create json for the word
@@ -76,7 +76,7 @@ class PacksController extends Controller
 
       }
     } else {
-      $word_info = json_encode(array('word' => $word, 'notes' => 'Empty'));
+      $word_info = json_encode(array('word' => $word, 'notes' => ''));
     }
 
     // Append the new word to the pack
@@ -101,8 +101,8 @@ class PacksController extends Controller
 
   }
 
-  public function delete($id, $word) {
-    return redirect(`/$id`);
+  public function delete($pack_id, $word) {
+    return redirect(route('packs.show', $pack_id));
   }
 
   public function destroy($id) {

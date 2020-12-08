@@ -25,7 +25,7 @@ Route::post('/{pack_id}/label', 'PacksController@label')->name('packs.label')->m
 
 Route::post('/{pack_id}/edit/{word}', 'PacksController@edit')->name('packs.edit')->middleware('auth');
 
-Route::post('/{pack_id}/delete/{word}', 'PacksController@delete')->name('packs.delete')->middleware('auth');
+Route::delete('/{pack_id}/delete/{word}', 'PacksController@delete')->name('packs.delete')->middleware('auth');
 
 Route::delete('/{pack_id}', 'PacksController@destroy')->name('packs.destroy')->middleware('auth');
 
