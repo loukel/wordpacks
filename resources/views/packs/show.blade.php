@@ -10,10 +10,12 @@
   </div>
   <div class="card mb-3">
     <div class="card-body">
-      <div class="d-flex justify-content-center md-form form-sm w-100 flex-wrap">
+      <form class="d-flex justify-content-center md-form form-sm w-100 flex-wrap" method="post"
+        action="{{ route('packs.add') }}">
         @csrf
-        <input class="form-control mr-2 w-75" type="text" placeholder="Add" aria-label="Add" id="word">
-        <button class="btn btn-outline-dark mr-2" onClick="add_word('{{ $pack_id }}', 'defined')">
+        <input type="hidden" name="pack_id" value="{{ $pack_id }}">
+        <input class="form-control mr-2 w-75" type="text" placeholder="Add" aria-label="Add" name="word">
+        <button class="btn btn-outline-dark mr-2" name="define">
           <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
             xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"
@@ -22,12 +24,13 @@
               d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
           </svg>
         </button>
-        <button class="btn btn-outline-dark add" onClick="add_word('{{ $pack_id }}', 'custom')">
+        <button class="btn btn-outline-dark add" name="custom">
           Custom Word
         </button>
-      </div>
+      </form>
     </div>
   </div>
+  <p>{{ session('error') }}</p>
   @if($words != null)
     @foreach(array_reverse($words) as $word)
 
@@ -57,6 +60,7 @@
 </div>
 
 <script>
+  /*
   function add_word(pack_id, mode) {
     let word = document.getElementById('word').value;
     if (word) {
@@ -86,6 +90,7 @@
   function display_word(word_info) {
     console.log(word_info);
   }
+  *\
 
 </script>
 

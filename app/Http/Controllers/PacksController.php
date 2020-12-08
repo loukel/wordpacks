@@ -52,14 +52,23 @@ class PacksController extends Controller
     return view('packs.create');
   }
 
-  public function add($pack_id, $word, $mode) {
-    if ($mode == "defined") {
+  public function add() {
+    // Define varaibles
+    if (isset($_POST['define'])) {
+      $mode = 'define';
+    } elseif (isset($_POST['custom'])) {
+      $mode = 'custom';
+    }
+    $word = request('word');
+    $pack_id = request('pack_id');
+
+    if ($mode == "define") {
       // Find the words senses in the dictionary
       $word_senses = Dictionary::where('word', strtoupper($word))->get(['pos', 'definitions']);
 
       // Return rogue value if the word is not defined
-      if (empty($word_senses)) {
-        return -1;
+      if ($word_senses == "[]") {
+        return redirect(route('packs.show', $pack_id))->with('error', 'Word is not defined');
 
       } else {
         // Create json for the word
@@ -75,15 +84,13 @@ class PacksController extends Controller
       DB::collection('packs')
       ->where('_id', $pack_id)
       ->push('words', json_decode($word_info, true), true);
-      // Return to client to dynamically display
-      return $word_info;
 
     }
     catch (\Throwable $th) {
-      // If error return rogue value to show it wasn't successful
-      return -1;
+      return redirect(route('packs.show', $pack_id))->with('error', 'Word was not stored');
 
     }
+    return redirect(route('packs.show', $pack_id));
   }
 
   public function label() {
