@@ -9,4 +9,5 @@ class Dictionary extends Model
 {
   use HasFactory;
   protected $collection = 'dictionary';
+  protected $hidden = ['_id'];
 }

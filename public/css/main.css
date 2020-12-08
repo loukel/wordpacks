@@ -51,18 +51,24 @@
   counter-increment: section;
 }
 
-.container {
-  position: relative;
+.form-control:focus {
+  border-color: #cccccc;
+  box-shadow: 0 0 10px #ccc;
 }
 
-.back {
-  position: absolute;
-  top: 0.2rem;
+@media (max-width: 991.98px) {
+  .add {
+    margin-top: 0.5rem;
+  }
 }
 
 @media (max-width: 768px) {
   .pack {
     min-width: 100%;
+  }
+
+  .back {
+    display: none;
   }
 }
 
