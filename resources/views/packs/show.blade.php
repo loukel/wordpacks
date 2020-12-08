@@ -22,7 +22,7 @@
               d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
           </svg>
         </button>
-        <button class="btn btn-outline-dark add" onClick="add_word('{{ $pack_id }}')">
+        <button class="btn btn-outline-dark add" onClick="add_word('{{ $pack_id }}', 'custom')">
           Custom Word
         </button>
       </div>
@@ -34,17 +34,21 @@
       <div class="card mb-3">
         <h5 class="card-header bold">{{ $word['word'] }}</h5>
         <div class="card-body">
-          @foreach($word['senses'] as $sense)
-            <div class="sense mb-3">
-              <h5 class="card-subtitle font-italic">{{ $sense['pos'] }}</h5>
-              @foreach($sense['definitions'] as $definition)
-                <p class="card-text">{{ $definition }}</p>
-                @if($loop->index >= 2)
-                  @break
-                @endif
-              @endforeach
-            </div>
-          @endforeach
+          @if(!empty($word['senses']))
+            @foreach($word['senses'] as $sense)
+              <div class="sense mb-3">
+                <h5 class="card-subtitle font-italic">{{ $sense['pos'] }}</h5>
+                @foreach($sense['definitions'] as $definition)
+                  <p class="card-text">{{ $definition }}</p>
+                  @if($loop->index >= 2)
+                    @break
+                  @endif
+                @endforeach
+              </div>
+            @endforeach
+          @else
+            <p>{{ $word['notes'] }}</p>
+          @endif
         </div>
       </div>
 
@@ -53,12 +57,12 @@
 </div>
 
 <script>
-  function add_word(pack_id) {
+  function add_word(pack_id, mode) {
     let word = document.getElementById('word').value;
     if (word) {
       var request = new XMLHttpRequest();
 
-      request.open("post", pack_id + "/add/" + word, true);
+      request.open("post", `${pack_id}/add/${word}/${mode}`, true);
       // Set csrf token up
       request.setRequestHeader('X-CSRF-TOKEN', document.head.querySelector("[name~=csrf-token][content]").content)
 
@@ -71,7 +75,7 @@
             display_word(this.responseText);
           }
         }
-      };
+      }
       request.send();
       document.getElementById('word').value = "";
     } else {

@@ -52,18 +52,22 @@ class PacksController extends Controller
     return view('packs.create');
   }
 
-  public function add($pack_id, $word) {
-    // Find the words senses in the dictionary
-    $word_senses = Dictionary::where('word', strtoupper($word))->get(['pos', 'definitions']);
+  public function add($pack_id, $word, $mode) {
+    if ($mode == "defined") {
+      // Find the words senses in the dictionary
+      $word_senses = Dictionary::where('word', strtoupper($word))->get(['pos', 'definitions']);
 
-    // Return rogue value if the word is not defined
-    if (empty($word_senses)) {
-      return -1;
+      // Return rogue value if the word is not defined
+      if (empty($word_senses)) {
+        return -1;
 
+      } else {
+        // Create json for the word
+        $word_info = json_encode(array('word' => $word, 'senses' => $word_senses));
+
+      }
     } else {
-      // Create json for the word
-      $word_info = json_encode(array('word' => $word, 'senses' => $word_senses));
-
+      $word_info = json_encode(array('word' => $word, 'notes' => 'Empty'));
     }
 
     // Append the new word to the pack

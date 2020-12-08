@@ -19,7 +19,7 @@ Route::get('/create', 'PacksController@create')->name('packs.create')->middlewar
 
 Route::get('/{pack_id}', 'PacksController@show')->name('packs.show')->middleware('auth');
 
-Route::post('/{pack_id}/add/{word}', 'PacksController@add')->name('packs.add')->middleware('auth');
+Route::post('/{pack_id}/add/{word}/{mode}', 'PacksController@add')->name('packs.add')->middleware('auth');
 
 Route::post('{pack_id}/delete/{word}', 'PacksController@delete')->name('packs.delete')->middleware('auth');
 
