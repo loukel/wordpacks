@@ -86,6 +86,14 @@ class PacksController extends Controller
     }
   }
 
+  public function label() {
+
+  }
+
+  public function edit() {
+
+  }
+
   public function delete($id, $word) {
     return redirect(`/$id`);
   }

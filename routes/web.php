@@ -21,8 +21,12 @@ Route::get('/{pack_id}', 'PacksController@show')->name('packs.show')->middleware
 
 Route::post('/{pack_id}/add/{word}/{mode}', 'PacksController@add')->name('packs.add')->middleware('auth');
 
-Route::post('{pack_id}/delete/{word}', 'PacksController@delete')->name('packs.delete')->middleware('auth');
+Route::post('/{pack_id}/label', 'PacksController@label')->name('packs.label')->middleware('auth');
 
-Route::delete('{pack_id}', 'PacksController@destroy')->name('packs.destroy')->middleware('auth');
+Route::post('/{pack_id}/edit/{word}', 'PacksController@edit')->name('packs.edit')->middleware('auth');
+
+Route::post('/{pack_id}/delete/{word}', 'PacksController@delete')->name('packs.delete')->middleware('auth');
+
+Route::delete('/{pack_id}', 'PacksController@destroy')->name('packs.destroy')->middleware('auth');
 
 // Route::get('word/{word}',)
