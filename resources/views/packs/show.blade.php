@@ -33,13 +33,19 @@
   <p>{{ session('error') }}</p>
   @if($words != null)
     @foreach(array_reverse($words) as $word)
-
       <div class="card mb-3">
         <div class="card-header d-flex justify-content-between align-items-center">
           <h5>{{ $word['word'] }}</h5>
-          <div class="btn-toolbar" role="group">
+          <div class="btn-toolbar" id="btns_{{ $word['word'] }}" role="group">
             @if(empty($word['senses']))
-              <button class="btn btn-sm btn-primary float-right">Edit</button>
+              <button class="btn btn-sm btn-primary float-right edit"
+                onclick="make_editable('{{ $word['word'] }}')">
+                Edit
+              </button>
+              <button class="btn btn-sm btn-success float-right update"
+                onclick="update_note('{{ $pack_id }}','{{ $word['word'] }}')">
+                Update
+              </button>
             @endif
             <form
               action="{{ route('packs.delete', ['pack_id' =>$pack_id,'word'=>$word['word']]) }}"
@@ -64,7 +70,11 @@
               </div>
             @endforeach
           @else
-            <p>{{ $word['notes'] }}</p>
+            <form class="updating" id='form_{{ $word['word'] }}'>
+              <p class="note" data-placeholder="Note" onfocus="this.value = this.value;">
+                {{ $word['notes'] }}
+              </p>
+            </form>
           @endif
         </div>
       </div>
@@ -73,39 +83,60 @@
   @endif
 </div>
 
+@endsection
+
+@section('scripts')
 <script>
-  /*
-  function add_word(pack_id, mode) {
-    let word = document.getElementById('word').value;
-    if (word) {
-      var request = new XMLHttpRequest();
+  function make_editable(word) {
+    var note = document.getElementById('form_' + word).getElementsByTagName('p')[0];
+    note.contentEditable = true;
+    note.focus();
+    document.getElementById('btns_' + word).classList.toggle('editing');
+  }
 
-      request.open("post", `${pack_id}/add/${word}/${mode}`, true);
-      // Set csrf token up
-      request.setRequestHeader('X-CSRF-TOKEN', document.head.querySelector("[name~=csrf-token][content]").content)
+  function update_note(pack_id, word) {
+    var note = document.getElementById('form_' + word).getElementsByTagName('p')[0];
+    note.contentEditable = false;
 
-      request.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          if (this.responseText == -1) {
-            //alert('word not exist');
-            display_word(this.responseText);
-          } else {
-            display_word(this.responseText);
-          }
+    params = "note=" + note.innerHTML;
+    request = new async_request();
+
+    request.open("post", `${pack_id}/edit/${word}`, true);
+    // Set csrf token up
+    request.setRequestHeader('X-CSRF-TOKEN', document.head.querySelector("[name~=csrf-token][content]").content)
+
+    request.setRequestHeader('Content-type', "application/x-www-form-urlencoded");
+    request.setRequestHeader('Content-type', params.length);
+    request.setRequestHeader('Connection', "close");
+
+    request.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText)
+      }
+    }
+    request.send(params);
+
+    buttons = document.getElementById('btns_' + word);
+    buttons.classList.toggle('editing');
+    buttons.focus();
+  }
+
+  function async_request() {
+    try {
+      var request = new XMLHttpRequest()
+    } catch (e1) {
+      try {
+        request = new ActiveXObject("Msxml2.XMLHTTP")
+      } catch (e2) {
+        try {
+          request = new ActiveXObject("Microsoft.XMLHTTP")
+        } catch (e3) {
+          request = false
         }
       }
-      request.send();
-      document.getElementById('word').value = "";
-    } else {
-      console.log("No word inputted");
     }
+    return request
   }
-
-  function display_word(word_info) {
-    console.log(word_info);
-  }
-  *\
 
 </script>
-
 @endsection

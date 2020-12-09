@@ -57,6 +57,41 @@
   box-shadow: 0 0 10px #ccc;
 }
 
+.note {
+  min-width: 100%;
+  padding: 0;
+}
+// p element has to be completely empty
+.note:empty:not(:focus)::before {
+  content: attr(data-placeholder);
+  font-style: italic;
+}
+
+// Display update/edit button on function
+.update {
+  display: none;
+}
+.edit {
+  display: flex;
+}
+.editing {
+  .update {
+    display: flex;
+  }
+  .edit {
+    display: none;
+  }
+}
+.updating {
+  .update-note {
+    display: flex;
+  }
+}
+// Removes horid blue border after update for ios
+.note:not(:focus)[contenteditable] {
+  outline: 0px solid transparent;
+}
+
 @media (max-width: 991.98px) {
   .add {
     margin-top: 0.5rem;

@@ -59,8 +59,8 @@ class PacksController extends Controller
     } elseif (isset($_POST['custom'])) {
       $mode = 'custom';
     }
-    $word = request('word');
-    $pack_id = request('pack_id');
+    $word = SanitizeString(request('word'));
+    $pack_id = SanitizeString(request('pack_id'));
 
     if ($mode == "define") {
       // Find the words senses in the dictionary
@@ -97,8 +97,15 @@ class PacksController extends Controller
 
   }
 
-  public function edit() {
-
+  public function edit($pack_id, $word) {
+    if (isset($_POST['note'])) {
+      $note = SanitizeString($_POST['note']);
+      try {
+        return DB::collection('packs')->where('_id', $pack_id)->where('words.word',$word)->update(['words.$.notes' => $note]);
+      } catch (\Throwable $th) {
+        return 'error: '.$th;
+      }
+    }
   }
 
   public function delete($pack_id, $word) {
@@ -108,4 +115,11 @@ class PacksController extends Controller
   public function destroy($id) {
     return route('packs.index');
   }
+}
+
+function SanitizeString($var)
+{
+  $var = strip_tags($var);
+  $var = htmlentities($var);
+  return stripslashes($var);
 }

@@ -56,6 +56,40 @@
   box-shadow: 0 0 10px #ccc;
 }
 
+.note {
+  min-width: 100%;
+  padding: 0;
+}
+
+.note:empty:not(:focus)::before {
+  content: attr(data-placeholder);
+  font-style: italic;
+}
+
+.update {
+  display: none;
+}
+
+.edit {
+  display: flex;
+}
+
+.editing .update {
+  display: flex;
+}
+
+.editing .edit {
+  display: none;
+}
+
+.updating .update-note {
+  display: flex;
+}
+
+.note:not(:focus)[contenteditable] {
+  outline: 0px solid transparent;
+}
+
 @media (max-width: 991.98px) {
   .add {
     margin-top: 0.5rem;
