@@ -91,7 +91,7 @@
 
 @media (max-width: 1200px) {
   .pack {
-    min-width: max(20rem, 50%);
+    min-width: 50%;
   }
 }
 
