@@ -20,6 +20,7 @@ class PacksController extends Controller
     $packs = Packs::where('creator', $user_id)->get(['label']);
 
     if (($packs == '[]')) {
+      // If empty create a pack
       return $this->create();
     } else {
       return view('packs.index',[
@@ -54,7 +55,6 @@ class PacksController extends Controller
     } else {
       abort(404);
     }
-
   }
 
   public function create() {

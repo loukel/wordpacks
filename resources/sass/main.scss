@@ -21,9 +21,6 @@
 .pack {
   min-width: 20rem;
   text-overflow: ellipsis;
-  // .update {
-  //   display: none;
-  // }
   .label {
     width: max-content;
     max-width: 100%;
@@ -38,9 +35,6 @@
     overflow: visible;
     white-space: normal;
   }
-  // .label:focus + .update {
-  //   display: inline;
-  // }
 }
 
 .sense {

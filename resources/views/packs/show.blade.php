@@ -3,11 +3,11 @@
 @section('content')
 
 <div class="container" id="container">
-  <div class="h1 text-center">
+  <div class="h1 text-center" contentEditable=true onfocusout="update_label('{{ $pack_id }}')"
+    onkeydown="enter_check('{{ $pack_id }}')" id="label">
     {{ $label }}
-    <br>
-    {{-- <small class="text-muted">Created by: {{ $creator }}</small> --}}
   </div>
+  {{-- <small class="text-muted">Created by: {{ $creator }}</small> --}}
   <div class="card mb-3">
     <div class="card-body">
       <form class="d-flex justify-content-center md-form form-sm w-100 flex-wrap" method="post"
@@ -78,6 +78,12 @@
       </div>
 
     @endforeach
+  @else
+    <script>
+      var label = document.getElementById('label');
+      label.focus();
+
+    </script>
   @endif
 </div>
 
@@ -85,6 +91,34 @@
 
 @section('scripts')
 <script>
+  function enter_check(pack_id) {
+    if (event.key === 'Enter') {
+      update_label(pack_id)
+    }
+  }
+
+  function update_label(pack_id) {
+    var label = document.getElementById('label');
+    params = "label=" + label.innerHTML;
+    request = new async_request();
+
+    request.open("post", `/${pack_id}/update`, true);
+    // Set csrf token up
+    request.setRequestHeader('X-CSRF-TOKEN', document.head.querySelector("[name~=csrf-token][content]").content)
+
+    request.setRequestHeader('Content-type', "application/x-www-form-urlencoded");
+    request.setRequestHeader('Content-type', params.length);
+    request.setRequestHeader('Connection', "close");
+
+    request.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText)
+      }
+    }
+    request.send(params);
+    label.blur();
+  }
+
   function make_editable(word) {
     var note = document.getElementById('form_' + word).getElementsByTagName('p')[0];
     note.contentEditable = true;
