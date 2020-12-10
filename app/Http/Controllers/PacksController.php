@@ -70,8 +70,8 @@ class PacksController extends Controller
     } elseif (isset($_POST['custom'])) {
       $mode = 'custom';
     }
-    $word = SanitizeString(request('word'));
-    $pack_id = SanitizeString(request('pack_id'));
+    $word = sanitize_string(request('word'));
+    $pack_id = sanitize_string(request('pack_id'));
 
     if ($mode == "define") {
       // Find the words senses in the dictionary
@@ -110,7 +110,7 @@ class PacksController extends Controller
 
   public function edit($pack_id, $word) {
     if (isset($_POST['note'])) {
-      $note = SanitizeString($_POST['note']);
+      $note = sanitize_string($_POST['note']);
       try {
         return DB::collection('packs')->where('_id', $pack_id)->where('words.word',$word)->update(['words.$.notes' => $note]);
       } catch (\Throwable $th) {
@@ -120,16 +120,22 @@ class PacksController extends Controller
   }
 
   public function delete($pack_id, $word) {
-    DB::collection('packs')->where('_id', $pack_id)->pull('words', ['word' => SanitizeString($word)], true);
+    DB::collection('packs')->where('_id', $pack_id)->pull('words', ['word' => sanitize_string($word)], true);
     return redirect(route('packs.show', $pack_id));
   }
 
-  public function destroy($id) {
-    return route('packs.index');
+  public function destroy($pack_id) {
+    $pack = Packs::where('_id', sanitize_string($pack_id))->where('creator', Auth::id());
+    try {
+      $pack->delete();
+    } catch (\Throwable $th) {
+      return redirect(route('packs.index'))->with('error','Didn\'t delete pack: '.$pack_id);
+    }
+    return redirect(route('packs.index'));
   }
 }
 
-function SanitizeString($var)
+function sanitize_string($var)
 {
   $var = strip_tags($var);
   $var = htmlentities($var);

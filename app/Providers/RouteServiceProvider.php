@@ -48,7 +48,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/web.php'));
         });
 
-        Route::pattern('pack_id', '^(?=.{24}$).*');
+        // Route::pattern('pack_id', '^(?=.{24}$).*');
     }
 
     /**

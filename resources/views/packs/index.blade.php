@@ -18,8 +18,28 @@
                 onfocusout="updateLabel({{ $pack['id'] }})">
                 {{ $pack['label'] }}
               </div>
-              <button class="btn btn-dark"
-                onClick="window.location = '{{ route('packs.show', $pack['id'] ) }}'">Open</button>
+              <div class="btn-group">
+                <div class="btn-group dropdown">
+                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+
+                  </button>
+                  <div class="dropdown-menu">
+                    <button class="dropdown-item btn">Edit</button>
+                    <form
+                      action="{{ route('packs.destroy', $pack['id']) }}"
+                      method="post">
+                      @csrf
+                      @method('DELETE')
+                      <button class="dropdown-item btn text-danger">Delete</button>
+                    </form>
+                  </div>
+                </div>
+                <button class="btn btn-dark"
+                  onClick="window.location = '{{ route('packs.show', $pack['id'] ) }}'">
+                  Open
+                </button>
+              </div>
             </div>
           </div>
         @endforeach
@@ -30,15 +50,13 @@
   </div>
 </div>
 
-<script>
-  function updateLabel(id) {
-    console.log("Updated" + id);
-  }
 
-  function createNew() {
-    console.log("New pack created")
-  }
+{{-- {{-- <button class="btn btn-success update mb-1">Update label</button> --}}
+@endsection
+
+@section('scripts')
+<script>
+
 
 </script>
-{{-- {{-- <button class="btn btn-success update mb-1">Update label</button> --}}
 @endsection
