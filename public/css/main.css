@@ -89,6 +89,12 @@
   outline: 0px solid transparent;
 }
 
+@media (max-width: 1200px) {
+  .pack {
+    min-width: max(20rem, 50%);
+  }
+}
+
 @media (max-width: 991.98px) {
   .add {
     margin-top: 0.5rem;
