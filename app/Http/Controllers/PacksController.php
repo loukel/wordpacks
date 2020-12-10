@@ -109,6 +109,7 @@ class PacksController extends Controller
   }
 
   public function delete($pack_id, $word) {
+    DB::collection('packs')->where('_id', $pack_id)->pull('words', ['word' => SanitizeString($word)], true);
     return redirect(route('packs.show', $pack_id));
   }
 
