@@ -25,31 +25,42 @@ class PacksController extends Controller
 
   public function show($pack_id) {
     $pack = Packs::find($pack_id);
+    if (!empty($pack)) {
+      // Find creator of the pack
+      $creator_id = $pack['creator'];
+      $creator = User::find($creator_id)['username'];
+      // Declare if the viewer created the pack, this should probably change to a laravel roles structure
+      $is_creator = Auth::id() === $creator_id;
 
-    // Find creator of the pack
-    $creator_id = $pack['creator'];
-    $creator = User::find($creator_id)['username'];
-    // Declare if the viewer created the pack, this should probably change to a laravel roles structure
-    $is_creator = Auth::id() === $creator_id;
+      // Asign pack label
+      $label = $pack['label'];
+      // Load words json by allocating words to their definitions
 
-    // Asign pack label
-    $label = $pack['label'];
-    // Load words json by allocating words to their definitions
+      $words = array();
+      $words = $pack['words'];
 
-    $words = array();
-    $words = $pack['words'];
+      return view('packs.show', [
+        'pack_id' => $pack_id,
+        'creator' => $creator,
+        'is_creator' => $is_creator,
+        'label' => $label,
+        'words' => $words,
+      ]);
+    } else {
+      abort(404);
+    }
 
-    return view('packs.show', [
-      'pack_id' => $pack_id,
-      'creator' => $creator,
-      'is_creator' => $is_creator,
-      'label' => $label,
-      'words' => $words,
-    ]);
   }
 
   public function create() {
-    return view('packs.create');
+    $user_id = Auth::id();
+    $pack = new Packs;
+    $pack = Packs::create(array(
+      'creator' => $user_id,
+      'label' => 'New pack',
+      'words' => Array(),
+    ));
+    return redirect(route('packs.show', $pack->id));
   }
 
   public function add() {
@@ -68,7 +79,7 @@ class PacksController extends Controller
 
       // Return rogue value if the word is not defined
       if ($word_senses == "[]") {
-        return redirect(route('packs.show', $pack_id))->with('error', 'Click to change');
+        return redirect(route('packs.show', $pack_id))->with('error', 'Word not found');
 
       } else {
         // Create json for the word

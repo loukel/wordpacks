@@ -4,11 +4,14 @@
   box-sizing: border-box;
 }
 
-.create {
-  font-size: 2rem;
-}
-.create:hover {
-  cursor: pointer;
+.nav-link.btn,
+.nav-link.btn:focus,
+.nav-link.btn:active {
+  outline: none;
+  border: none;
+  -moz-box-shadow: 0 0 0 transparent;
+  -webkit-box-shadow: 0 0 0 transparent;
+  box-shadow: 0 0 0 transparent;
 }
 
 .pack {

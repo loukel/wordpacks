@@ -6,7 +6,7 @@
   <div class="h1 text-center">
     {{ $label }}
     <br>
-    <small class="text-muted">Created by: {{ $creator }}</small>
+    {{-- <small class="text-muted">Created by: {{ $creator }}</small> --}}
   </div>
   <div class="card mb-3">
     <div class="card-body">

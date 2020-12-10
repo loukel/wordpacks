@@ -8,4 +8,14 @@ use Jenssegers\Mongodb\Eloquent\Model;
 class Packs extends Model
 {
     use HasFactory;
+    /**
+    * The attributes that are mass assignable.
+    *
+    * @var array
+    */
+    protected $fillable = [
+      'label',
+      'words',
+      'creator',
+     ];
 }
