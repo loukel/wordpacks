@@ -35,8 +35,6 @@
 }
 
 .pack .label:focus {
-  border: solid 1px;
-  border-radius: 0.2rem;
   overflow: visible;
   white-space: normal;
 }
@@ -80,14 +78,11 @@
 
 .editing .update {
   display: flex;
+  justify-content: center;
 }
 
 .editing .edit {
   display: none;
-}
-
-.updating .update-note {
-  display: flex;
 }
 
 .note:not(:focus)[contenteditable] {

@@ -35,8 +35,6 @@
     white-space: nowrap;
   }
   .label:focus {
-    border: solid 1px;
-    border-radius: 0.2rem;
     overflow: visible;
     white-space: normal;
   }
@@ -84,14 +82,10 @@
 .editing {
   .update {
     display: flex;
+    justify-content: center;
   }
   .edit {
     display: none;
-  }
-}
-.updating {
-  .update-note {
-    display: flex;
   }
 }
 // Removes horid blue border after update for ios

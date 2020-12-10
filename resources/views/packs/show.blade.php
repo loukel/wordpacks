@@ -70,7 +70,7 @@
               </div>
             @endforeach
           @else
-            <form class="updating" id='form_{{ $word['word'] }}'>
+            <form id='form_{{ $word['word'] }}'>
               <p class="note" data-placeholder="Note" onfocus="this.value = this.value;">{{ $word['notes'] }}</p>
             </form>
           @endif

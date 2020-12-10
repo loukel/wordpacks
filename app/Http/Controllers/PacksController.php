@@ -104,8 +104,15 @@ class PacksController extends Controller
     return redirect(route('packs.show', $pack_id));
   }
 
-  public function label() {
-
+  public function update($pack_id) {
+    if (isset($_POST['label'])) {
+      $label = sanitize_string($_POST['label']);
+      try {
+        return DB::collection('packs')->where('_id', $pack_id)->update(['label' => $label]);
+      } catch (\Throwable $th) {
+        return 'error: '.$th;
+      }
+    }
   }
 
   public function edit($pack_id, $word) {
