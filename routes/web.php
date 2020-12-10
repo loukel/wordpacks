@@ -17,9 +17,9 @@ Route::get('/', 'PacksController@index')->name('packs.index')->middleware('auth'
 
 Route::post('/create', 'PacksController@create')->name('packs.create')->middleware('auth');
 
-Route::get('/{pack_id}', 'PacksController@show')->name('packs.show')->middleware('auth');
-
 Route::post('/add', 'PacksController@add')->name('packs.add')->middleware('auth');
+
+Route::get('/{pack_id}', 'PacksController@show')->name('packs.show')->middleware('auth');
 
 Route::post('/{pack_id}/update', 'PacksController@update')->name('packs.update')->middleware('auth');
 
@@ -28,5 +28,3 @@ Route::post('/{pack_id}/edit/{word}', 'PacksController@edit')->name('packs.edit'
 Route::delete('/{pack_id}/delete/{word}', 'PacksController@delete')->name('packs.delete')->middleware('auth');
 
 Route::delete('/{pack_id}', 'PacksController@destroy')->name('packs.destroy')->middleware('auth');
-
-// Route::get('word/{word}',)

@@ -18,9 +18,14 @@ class PacksController extends Controller
     // Lood packs
     $user_id = Auth::id();
     $packs = Packs::where('creator', $user_id)->get(['label']);
-    return view('packs.index',[
-      'packs' => $packs
-    ]);
+
+    if (($packs == '[]')) {
+      return $this->create();
+    } else {
+      return view('packs.index',[
+        'packs' => $packs
+      ]);
+    }
   }
 
   public function show($pack_id) {
