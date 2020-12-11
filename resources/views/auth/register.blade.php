@@ -87,7 +87,7 @@
         </div>
       </div>
 
-      <ul class="list-group mt-2 mb-3">
+      <ul class="list-group mt-4 mb-3">
         <li class="list-group-item ">Organise your new-found words</li>
         <li class="list-group-item">Book companion</li>
         <li class="list-group-item">Academic keyword storer</li>
