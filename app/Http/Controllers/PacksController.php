@@ -99,6 +99,7 @@ class PacksController extends Controller
     try {
       DB::collection('packs')
       ->where('_id', $pack_id)
+      ->where('creator', Auth::id())
       ->push('words', json_decode($word_info, true), true);
 
     }
@@ -113,7 +114,7 @@ class PacksController extends Controller
     if (isset($_POST['label'])) {
       $label = sanitize_string($_POST['label']);
       try {
-        return DB::collection('packs')->where('_id', $pack_id)->update(['label' => $label]);
+        return DB::collection('packs')->where('_id', $pack_id)->where('creator', Auth::id())->update(['label' => $label]);
       } catch (\Throwable $th) {
         return 'error: '.$th;
       }
@@ -124,7 +125,7 @@ class PacksController extends Controller
     if (isset($_POST['note'])) {
       $note = sanitize_string($_POST['note']);
       try {
-        return DB::collection('packs')->where('_id', $pack_id)->where('words.word',$word)->update(['words.$.notes' => $note]);
+        return DB::collection('packs')->where('_id', $pack_id)->where('creator', Auth::id())->where('words.word',$word)->update(['words.$.notes' => $note]);
       } catch (\Throwable $th) {
         return 'error: '.$th;
       }
@@ -132,7 +133,7 @@ class PacksController extends Controller
   }
 
   public function delete($pack_id, $word) {
-    DB::collection('packs')->where('_id', $pack_id)->pull('words', ['word' => sanitize_string($word)], true);
+    DB::collection('packs')->where('_id', $pack_id)->where('creator', Auth::id())->pull('words', ['word' => sanitize_string($word)], true);
     return redirect(route('packs.show', $pack_id));
   }
 
