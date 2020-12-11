@@ -1,7 +1,10 @@
-@charset "UTF-8";
-
 * {
   box-sizing: border-box;
+}
+
+.container:not(.nav) {
+  -webkit-animation: fadeIn 1s;
+          animation: fadeIn 1s;
 }
 
 .pack {
@@ -32,11 +35,15 @@
 }
 
 .sense .card-text {
+  margin: 0;
   margin-left: 1.5rem;
+  margin-bottom: 0.3rem;
 }
 
 .sense .card-text::before {
-  content: counter(section) ". \A0\A0";
+  content: counter(section) ". ";
+  position: absolute;
+  left: 1rem;
   white-space: wrap;
   counter-increment: section;
 }
@@ -85,6 +92,15 @@
   flex-wrap: wrap;
 }
 
+.error {
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-name: fadeOut;
+  animation-name: fadeOut;
+}
+
 @media (max-width: 1200px) {
   .pack {
     min-width: 50%;
@@ -110,6 +126,46 @@
 
   .control button {
     margin-top: 0.5rem;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
   }
 }
 

@@ -15,7 +15,8 @@
           action="{{ route('packs.add') }}">
           @csrf
           <input type="hidden" name="pack_id" value="{{ $pack_id }}">
-          <input class="form-control mr-2 w-75" type="text" placeholder="Add" aria-label="Add" name="word">
+          <input class="form-control mr-2 w-75 flex-grow-1" type="text" placeholder="Add" aria-label="Add" name="word"
+            autocomplete="off">
           <button class="btn btn-outline-dark mr-2" name="define">
             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
@@ -32,12 +33,12 @@
       </div>
     </div>
   @endif
-  <p>{{ session('error') }}</p>
+  <p class="error" id="error">{{ session('error') }}</p>
   @if($words != null)
     @foreach(array_reverse($words) as $word)
       <div class="card mb-3 word">
         <div class="card-header d-flex justify-content-between align-items-center">
-          <h5>{{ $word['word'] }}</h5>
+          <h5>{{ ucfirst($word['word']) }}</h5>
           @if($is_creator)
             <div class="btn-toolbar" id="btns_{{ $word['word'] }}" role="group">
               @if(empty($word['senses']))
@@ -64,10 +65,11 @@
           @if(!empty($word['senses']))
             @foreach($word['senses'] as $sense)
               <div class="sense mb-3">
-                <h5 class="card-subtitle font-italic">{{ $sense['pos'] }}</h5>
+                <div class="card-subtitle font-italic">{{ ucfirst($sense['pos']) }}</div>
                 @foreach($sense['definitions'] as $definition)
-                  <p class="card-text">{{ $definition }}</p>
+                  <p class="card-text text-justify">{{ $definition }}</p>
                   @if($loop->index >= 2)
+                    {{-- Only print 3 definitions for each pos --}}
                     @break
                   @endif
                 @endforeach
@@ -94,6 +96,11 @@
 
 @section('scripts')
 <script>
+  setTimeout(function () {
+    error = document.getElementById('error');
+    error.style.display = "none";
+  }, 1000)
+
   function enter_check(pack_id) {
     if (event.key === 'Enter') {
       update_label(pack_id)

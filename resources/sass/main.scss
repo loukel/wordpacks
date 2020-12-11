@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+.container:not(.nav) {
+  animation: fadeIn 1s;
+}
+
 .pack {
   min-width: 20rem;
   text-overflow: ellipsis;
@@ -26,10 +30,14 @@
 .sense {
   counter-reset: section;
   .card-text {
+    margin: 0;
     margin-left: 1.5rem;
+    margin-bottom: 0.3rem;
   }
   .card-text::before {
-    content: counter(section) ". \00a0\00a0";
+    content: counter(section) ". ";
+    position: absolute;
+    left: 1rem;
     white-space: wrap;
     counter-increment: section;
   }
@@ -81,12 +89,21 @@
   }
 }
 
+.error {
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-name: fadeOut;
+  animation-name: fadeOut;
+}
+
+// Media queries
 @media (max-width: 1200px) {
   .pack {
     min-width: 50%;
   }
 }
-
 @media (max-width: 768px) {
   .pack {
     min-width: 100%;
@@ -102,5 +119,32 @@
     button {
       margin-top: 0.5rem;
     }
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
