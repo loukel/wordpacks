@@ -4,20 +4,6 @@
   box-sizing: border-box;
 }
 
-.nav-link.btn,
-.nav-link.btn:focus,
-.nav-link.btn:active {
-  outline: none;
-  border: none;
-  -moz-box-shadow: 0 0 0 transparent;
-  -webkit-box-shadow: 0 0 0 transparent;
-  box-shadow: 0 0 0 transparent;
-}
-
-.dropdown-item:active {
-  background: transparent;
-}
-
 .pack {
   min-width: 20rem;
   text-overflow: ellipsis;
@@ -86,16 +72,18 @@
 .note:not(:focus)[contenteditable] {
   outline: 0px solid transparent;
 }
+.word {
+  h5 {
+    max-width: 100%;
+  }
+  .card-header {
+    flex-wrap: wrap;
+  }
+}
 
 @media (max-width: 1200px) {
   .pack {
     min-width: 50%;
-  }
-}
-
-@media (max-width: 991.98px) {
-  .add {
-    margin-top: 0.5rem;
   }
 }
 
@@ -105,5 +93,14 @@
   }
   .back {
     display: none;
+  }
+  .control input {
+    min-width: 100%;
+  }
+  .control {
+    flex-wrap: wrap;
+    button {
+      margin-top: 0.5rem;
+    }
   }
 }

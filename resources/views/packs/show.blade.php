@@ -11,7 +11,7 @@
   @if($is_creator)
     <div class="card mb-3">
       <div class="card-body">
-        <form class="d-flex justify-content-center md-form form-sm w-100 flex-wrap" method="post"
+        <form class="d-flex justify-content-center md-form form-sm mw-100 control" method="post"
           action="{{ route('packs.add') }}">
           @csrf
           <input type="hidden" name="pack_id" value="{{ $pack_id }}">
@@ -26,7 +26,7 @@
             </svg>
           </button>
           <button class="btn btn-outline-dark add" name="custom">
-            Custom Word
+            Custom
           </button>
         </form>
       </div>
@@ -35,12 +35,11 @@
   <p>{{ session('error') }}</p>
   @if($words != null)
     @foreach(array_reverse($words) as $word)
-      <div class="card mb-3">
+      <div class="card mb-3 word">
         <div class="card-header d-flex justify-content-between align-items-center">
           <h5>{{ $word['word'] }}</h5>
           @if($is_creator)
             <div class="btn-toolbar" id="btns_{{ $word['word'] }}" role="group">
-
               @if(empty($word['senses']))
                 <button class="btn btn-sm btn-primary float-right edit"
                   onclick="make_editable('{{ $word['word'] }}')">
@@ -81,7 +80,6 @@
           @endif
         </div>
       </div>
-
     @endforeach
   @else
     <script>

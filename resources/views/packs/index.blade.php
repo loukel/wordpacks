@@ -4,8 +4,14 @@
 
 <div class="container">
   <div class="card">
-    <div class="card-header h4">
-      Packs
+    <div class="card-header d-flex justify-content-between">
+      <div class="h4">Packs</div>
+      <form action="{{ route('packs.create') }}" method="post">
+        @csrf
+        <button class="btn btn-success" role="button">
+          <span>Create</span>
+        </button>
+      </form>
     </div>
     <div class="card-body">
       <div class="row">

@@ -30,18 +30,6 @@
         <a class="navbar-brand" href="{{ url('/') }}">
           {{ config('app.name') }}
         </a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <form action="{{ route('packs.create') }}" method="post">
-                @csrf
-                <button class="nav-link btn pl-0" role="button">
-                  Create
-                </button>
-              </form>
-            </li>
-          </ul>
-        </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false"
           aria-label="{{ __('Toggle navigation') }}">
