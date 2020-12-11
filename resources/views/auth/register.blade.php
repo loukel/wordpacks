@@ -6,17 +6,6 @@
   <div class="row justify-content-center">
     <div class="col-md-8">
 
-      <div class="card mb-2">
-        <div class="card-body">
-          <div class="text-center">
-            <div class="h2 ">
-              ORGANISE YOUR NEW-FOUND WORDS <br>
-              <small class="text-muted">USING WORD PACKS</small>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div class="card">
         <div class="card-header">{{ __('Register') }}</div>
         <div class="card-body">
@@ -88,21 +77,25 @@
                 </button>
               </div>
             </div>
+            <div class="form-group row mb-0">
+              <div class="col-md-6 offset-md-4">
+                <p class="mt-3 mb-2">Already got an account? <a href="{{ route('login') }}">Login</a>
+                </p>
+              </div>
+            </div>
           </form>
         </div>
       </div>
 
-
-      {{-- <div class="card mt-2">
-        <div class="card-body">
-          <div class="text-center">
-            <div class="h2 ">
-              HOW LIMITED IS YOUR VOCABULARY <br>
-              <small class="text-muted"><a href="http://testyourvocab.com/ ">http://testyourvocab.com/</a></small>
-            </div>
-          </div>
-        </div>
-      </div> --}}
+      <ul class="list-group mt-2 mb-3">
+        <li class="list-group-item ">Organise your new-found words</li>
+        <li class="list-group-item">Book companion</li>
+        <li class="list-group-item">Academic keyword storer</li>
+      </ul>
+      <div class="text-center">
+        <p class="mb-0">How limited is your vocabulary?</p>
+        <a href="http://testyourvocab.com/ ">http://testyourvocab.com/</a>
+      </div>
 
     </div>
   </div>
