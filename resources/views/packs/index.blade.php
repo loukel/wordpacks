@@ -29,7 +29,8 @@
                       onclick="make_editable('{{ $pack['id'] }}')">Edit</button>
                     <form
                       action="{{ route('packs.destroy', $pack['id']) }}"
-                      method="post">
+                      method="post"
+                      onsubmit="if(!confirm('Are you sure you want to delete this pack?')){return false;}">
                       @csrf
                       @method('DELETE')
                       <button class="dropdown-item btn text-danger">Delete</button>
