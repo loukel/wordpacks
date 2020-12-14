@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use DB;
+
+use App\Models\User;
+use App\Models\Packs;
+use App\Models\Dictionary;
+
 class HomeController extends Controller
 {
     /**
@@ -23,6 +29,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+      $packs = Packs::all()->take(6);
+      foreach($packs as &$pack) {
+        $pack['username'] = User::find($pack->creator)['username'];
+      }
+      return view('home', ['packs' => $packs]);
     }
 }

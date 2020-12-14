@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'PacksController@index')->name('packs.index')->middleware('auth');
 
+Route::get('/community', 'HomeController@index')->name('home.index');
+
 Route::post('/create', 'PacksController@create')->name('packs.create')->middleware('auth');
 
 Route::post('/add', 'PacksController@add')->name('packs.add')->middleware('auth');

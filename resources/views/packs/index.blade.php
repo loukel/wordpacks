@@ -15,9 +15,7 @@
     </div>
     <div class="card-body">
       <div class="row">
-
         @foreach($packs as $pack)
-          <br>
           <div class="col-sm-4 py-2 pack">
             <div class="card card-body h-100">
               <div class="h3 label" id="label_{{ $pack['id'] }}"

@@ -7,7 +7,6 @@
     onfocusout="update_label('{{ $pack_id }}')" onkeydown="enter_check('{{ $pack_id }}')" id="label">
     {{ $label }}
   </div>
-  {{-- <small class="text-muted">Created by: {{ $creator }}</small> --}}
   @if($is_creator)
     <div class="card mb-3">
       <div class="card-body">
@@ -32,8 +31,12 @@
         </form>
       </div>
     </div>
+  @else
+    <small class="text-muted p-0 m-0">Created by: {{ $creator }}</small>
   @endif
-  <p class="error" id="error">{{ session('error') }}</p>
+  @if(!empty(session('error')))
+    <p class="error" id="error">{{ session('error') }}</p>
+  @endif
   @if($words != null)
     @foreach(array_reverse($words) as $word)
       <div class="card mb-3 word">
