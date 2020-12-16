@@ -24,20 +24,16 @@ class PacksController extends Controller
     $user_id = Auth::id();
     $packs = Packs::where('creator', $user_id)->get(['label']);
 
-    $public_packs = Packs::all()->take(6);
+    $public_packs = Packs::all()->sortByDesc('created_at')->take(6);
     foreach($public_packs as &$pack) {
       $pack['username'] = User::find($pack->creator)['username'];
     }
 
-    if (($packs == '[]')) {
-      // If empty create a pack
-      return $this->create();
-    } else {
-      return view('packs.index',[
-        'packs' => $packs,
-        'public_packs' => $public_packs,
-      ]);
-    }
+    return view('packs.index',[
+      'packs' => $packs,
+      'public_packs' => $public_packs,
+      'logged_in' => Auth::check(),
+    ]);
   }
 
   public function show($pack_id) {
