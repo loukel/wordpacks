@@ -2,18 +2,18 @@
 
 @section('content')
 <div class="container">
-  <div class="h2 text-center mb-3">Community</div>
-
-  <div class="card mb-3">
+  <p>Word packs is a web app </p>
+  {{-- <div class="card mb-3">
     <div class="card-header h4">
       Books
     </div>
     <div class="card-body">
-      <div class="row">
-
+      <div class="row justify-content-center">
+        <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1333576876l/10127019.jpg"
+          alt="The Lean Startup" width="250px">
       </div>
     </div>
-  </div>
+  </div> --}}
 
   <div class="card">
     <div class="card-header h4">
@@ -27,10 +27,11 @@
               <div class="h3 label" id="label_{{ $pack['id'] }}"
                 onkeydown="enter_check('{{ $pack['id'] }}')">
                 {{ $pack['label'] }}
+                <div class="text-muted small text-center">
+                  Created by {{ $pack['username'] }}
+                </div>
               </div>
-              <div class="text-muted text-cente">
-                Created by {{ $pack['username'] }}
-              </div>
+
               {{-- editing --}}
               <div class="btn-group" id="btns_{{ $pack['id'] }}">
                 <button class="btn btn-dark edit"

@@ -14,17 +14,28 @@ use App\Models\Dictionary;
 
 class PacksController extends Controller
 {
+  public function __construct()
+  {
+    // $this->middleware('auth');
+  }
+
   public function index() {
     // Lood packs
     $user_id = Auth::id();
     $packs = Packs::where('creator', $user_id)->get(['label']);
+
+    $public_packs = Packs::all()->take(6);
+    foreach($public_packs as &$pack) {
+      $pack['username'] = User::find($pack->creator)['username'];
+    }
 
     if (($packs == '[]')) {
       // If empty create a pack
       return $this->create();
     } else {
       return view('packs.index',[
-        'packs' => $packs
+        'packs' => $packs,
+        'public_packs' => $public_packs,
       ]);
     }
   }

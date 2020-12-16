@@ -51,8 +51,37 @@
             </div>
           </div>
         @endforeach
+      </div>
+    </div>
+  </div>
 
+  <div class="card mt-3">
+    <div class="card-header h4">
+      Public Packs - <span class="text-muted">Recently Created</span>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        @foreach($public_packs as $pack)
+          <div class="col-sm-4 py-2 pack">
+            <div class="card card-body h-100">
+              <div class="h3 label" id="label_{{ $pack['id'] }}"
+                onkeydown="enter_check('{{ $pack['id'] }}')">
+                {{ $pack['label'] }}
+                <div class="text-muted small text-center">
+                  Created by {{ $pack['username'] }}
+                </div>
+              </div>
 
+              {{-- editing --}}
+              <div class="btn-group" id="btns_{{ $pack['id'] }}">
+                <button class="btn btn-dark edit"
+                  onClick="window.location = '{{ route('packs.show', $pack['id'] ) }}'">
+                  Open
+                </button>
+              </div>
+            </div>
+          </div>
+        @endforeach
       </div>
     </div>
   </div>

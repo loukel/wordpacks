@@ -29,10 +29,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-      $packs = Packs::all()->take(6);
-      foreach($packs as &$pack) {
-        $pack['username'] = User::find($pack->creator)['username'];
-      }
-      return view('home', ['packs' => $packs]);
+
     }
 }
