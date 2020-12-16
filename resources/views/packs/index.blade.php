@@ -69,7 +69,7 @@
       <div class="card-body text-center">
         <div class="h5">Word Packs is a web app designed to define and organise unfamilliar words that you
           have encountered. It is a
-          great companion to use whilst reading books. It can also help with academic studies by storing important
+          great companion to use while reading books. It can also help with academic studies by storing important
           keywords.
         </div>
         <a class="btn btn-primary mt-2 " href="{{ route('register') }}">Register</a>
