@@ -87,6 +87,9 @@
   .card-header {
     flex-wrap: wrap;
   }
+  .card-body {
+    font-size: smaller;
+  }
 }
 
 .error {
@@ -102,6 +105,11 @@
 @media (max-width: 1200px) {
   .pack {
     min-width: 50%;
+  }
+  .word {
+    .card-body {
+      font-size: smaller;
+    }
   }
 }
 @media (max-width: 768px) {

@@ -64,13 +64,13 @@
             </div>
           @endif
         </div>
-        <div class="card-body">
+        <div class="card-body pb-0">
           @if(!empty($word['senses']))
             @foreach($word['senses'] as $sense)
               <div class="sense mb-3">
                 <div class="card-subtitle font-italic">{{ ucfirst($sense['pos']) }}</div>
                 @foreach($sense['definitions'] as $definition)
-                  <p class="card-text text-justify">{{ $definition }}</p>
+                  <p class="card-text">{{ $definition }}</p>
                   @if($loop->index >= 2)
                     {{-- Only print 3 definitions for each pos --}}
                     @break
@@ -80,7 +80,7 @@
             @endforeach
           @else
             <form id='form_{{ $word['word'] }}'>
-              <p class="note" data-placeholder="Note" onfocus="this.value = this.value;">{{ $word['notes'] }}</p>
+              <p class="note" data-placeholder="Edit to add Notes" onfocus="this.value = this.value;">{{ $word['notes'] }}</p>
             </form>
           @endif
         </div>
