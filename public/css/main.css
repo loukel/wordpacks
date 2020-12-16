@@ -8,11 +8,11 @@
 }
 
 .pack {
-  min-width: 20rem;
-  text-overflow: ellipsis;
+  text-align: center;
 }
 
 .pack .label {
+  font-size: 1.6rem;
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;

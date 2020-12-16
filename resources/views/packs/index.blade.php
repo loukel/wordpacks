@@ -25,7 +25,8 @@
             <div class="col-sm-4 py-2 pack">
               <div class="card card-body h-100">
                 <div class="h3 label" id="label_{{ $pack['id'] }}"
-                  onkeydown="enter_check('{{ $pack['id'] }}')">
+                  onkeydown="enter_check('{{ $pack['id'] }}')"
+                  onfocusout="update_label('{{ $pack['id'] }}')">
                   {{ $pack['label'] }}
                 </div>
                 {{-- editing --}}
