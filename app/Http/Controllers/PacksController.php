@@ -13,6 +13,10 @@ use App\Models\Packs;
 use App\Models\Dictionary;
 
 class PacksController extends Controller {
+  public function __construct() {
+      $this->middleware('auth')->except(['index','show']);
+  }
+
   public function index() {
     // Lood packs
     $user_id = Auth::id();
