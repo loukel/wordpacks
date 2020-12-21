@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Artesaos\SEOTools\Facades\SEOMeta;
+use Artesaos\SEOTools\Facades\OpenGraph;
+use Artesaos\SEOTools\Facades\TwitterCard;
+use Artesaos\SEOTools\Facades\JsonLd;
+
 use Illuminate\Http\Request;
 
 use Auth;
@@ -23,6 +28,11 @@ class PacksController extends Controller {
     $packs = Packs::where('user_id', $user_id)->get();
     $public_packs = Packs::latest()->take(6)->get();
 
+    // Meta Tags
+    $username = Auth::user()->username;
+    $pack_count = count($packs);
+    SEOMeta::setTitle("$username ($pack_count)");
+
     return view('packs.index',[
       'packs' => $packs,
       'public_packs' => $public_packs,
@@ -32,6 +42,19 @@ class PacksController extends Controller {
   public function show($pack_id) {
     $pack = Packs::find($pack_id);
     if (!empty($pack)) {
+      // Meta tags
+      SEOMeta::setTitle($pack->label);
+      OpenGraph::setTitle($pack->label);
+      JsonLd::setTitle($pack->label);
+
+      foreach($pack->words as $word) {
+        $words[] = $word['word'];
+      }
+
+      SEOMeta::setDescription(implode(",", $words));
+      OpenGraph::setDescription(implode(",", $words));
+      JsonLd::setDescription(implode(",", $words));
+
       return view('packs.show', [
         'pack' => $pack,
       ]);
