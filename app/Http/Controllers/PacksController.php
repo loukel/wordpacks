@@ -47,13 +47,15 @@ class PacksController extends Controller {
       OpenGraph::setTitle($pack->label);
       JsonLd::setTitle($pack->label);
 
-      foreach($pack->words as $word) {
-        $words[] = $word['word'];
-      }
+      if ($pack->words) {
+        foreach($pack->words as $word) {
+          $words[] = $word['word'];
+        }
 
-      SEOMeta::setDescription(implode(",", $words));
-      OpenGraph::setDescription(implode(",", $words));
-      JsonLd::setDescription(implode(",", $words));
+        SEOMeta::setDescription(implode(",", $words));
+        OpenGraph::setDescription(implode(",", $words));
+        JsonLd::setDescription(implode(",", $words));
+      }
 
       return view('packs.show', [
         'pack' => $pack,
