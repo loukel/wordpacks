@@ -17,16 +17,11 @@ class PacksController extends Controller {
     // Lood packs
     $user_id = Auth::id();
     $packs = Packs::where('user_id', $user_id)->get(['label']);
-
     $public_packs = Packs::latest()->take(6)->get();
-    foreach($public_packs as &$pack) {
-      $pack['username'] = User::find($pack->user_id)['username'];
-    }
 
     return view('packs.index',[
       'packs' => $packs,
       'public_packs' => $public_packs,
-      'logged_in' => Auth::check(),
     ]);
   }
 

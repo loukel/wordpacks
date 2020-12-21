@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container">
-  @if($logged_in)
+  @if(Auth::check())
     <div class="card mb-3">
       <div class="card-header d-flex justify-content-between">
         <div class="h4">My Packs</div>
@@ -24,23 +24,19 @@
           @foreach($packs as $pack)
             <div class="col-sm-4 py-2 pack">
               <div class="card card-body h-100">
-                <div class="h3 label" id="label_{{ $pack['id'] }}"
-                  onkeydown="enter_check('{{ $pack['id'] }}')"
-                  onfocusout="update_label('{{ $pack['id'] }}')">
-                  {{ $pack['label'] }}
+                <div class="h3 label" id="label_{{ $pack->id }}" onkeydown="enter_check('{{ $pack->id }}')"
+                  onfocusout="update_label('{{ $pack->id }}')">
+                  {{ $pack->label }}
                 </div>
                 {{-- editing --}}
-                <div class="btn-group" id="btns_{{ $pack['id'] }}">
+                <div class="btn-group" id="btns_{{ $pack->id }}">
                   <div class="btn-group dropdown edit">
                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
                       aria-haspopup="true" aria-expanded="false">
                     </button>
                     <div class="dropdown-menu">
-                      <button class="dropdown-item btn"
-                        onclick="make_editable('{{ $pack['id'] }}')">Edit</button>
-                      <form
-                        action="{{ route('packs.destroy', $pack['id']) }}"
-                        method="post"
+                      <button class="dropdown-item btn" onclick="make_editable('{{ $pack->id }}')">Edit</button>
+                      <form action="{{ route('packs.destroy', $pack->id) }}" method="post"
                         onsubmit="if(!confirm('Are you sure you want to delete this pack?')){return false;}">
                         @csrf
                         @method('DELETE')
@@ -49,11 +45,10 @@
                     </div>
                   </div>
                   <button class="btn btn-dark edit"
-                    onClick="window.location = '{{ route('packs.show', $pack['id'] ) }}'">
+                    onClick="window.location = '{{ route('packs.show', $pack->id ) }}'">
                     Open
                   </button>
-                  <button class="btn btn-success update"
-                    onclick="update_label('{{ $pack['id'] }}')">Update</button>
+                  <button class="btn btn-success update" onclick="update_label('{{ $pack->id }}')">Update</button>
                 </div>
               </div>
             </div>
@@ -86,18 +81,17 @@
         @foreach($public_packs as $pack)
           <div class="col-sm-4 py-2 pack">
             <div class="card card-body h-100">
-              <div class="h3 label" id="label_{{ $pack['id'] }}"
-                onkeydown="enter_check('{{ $pack['id'] }}')">
+              <div class="h3 label" id="label_{{ $pack->id }}" onkeydown="enter_check('{{ $pack->id }}')">
                 {{ $pack['label'] }}
                 <div class="text-muted small text-center">
-                  Created by {{ $pack['username'] }}
+                  Created by {{ $pack->user->username }}
                 </div>
               </div>
 
-              {{-- editing --}}
-              <div class="btn-group" id="btns_{{ $pack['id'] }}">
+              {{-- btns --}}
+              <div class="btn-group" id="btns_{{ $pack->id }}">
                 <button class="btn btn-dark edit"
-                  onClick="window.location = '{{ route('packs.show', $pack['id'] ) }}'">
+                  onClick="window.location = '{{ route('packs.show', $pack->id ) }}'">
                   Open
                 </button>
               </div>

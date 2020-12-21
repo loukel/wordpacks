@@ -81,8 +81,7 @@
             @endforeach
           @else
             <form id='form_{{ $word['word'] }}'>
-              <p class="note" data-placeholder="Edit to add Notes" onfocus="this.value = this.value;">
-                {{ $word['notes'] }}</p>
+              <p class="note" data-placeholder="Edit to add Notes" onfocus="this.value = this.value;">{{ $word['notes'] }}</p>
             </form>
           @endif
         </div>
