@@ -11,6 +11,32 @@
   {!! Twitter::generate() !!}
   {!! JsonLd::generate() !!}
 
+
+  {{-- Favicons --}}
+  @if(Route::currentRouteName() == 'packs.show')
+    <link rel="apple-touch-icon" sizes="180x180"
+      href="{{ asset('favicon/open/apple-touch-icon.png') }}">
+
+    <link rel="icon" type="image/png" sizes="32x32"
+      href="{{ asset('favicon/open/favicon-32x32.png') }}">
+
+    <link rel="icon" type="image/png" sizes="16x16"
+      href="{{ asset('favicon/open/favicon-16x16.png') }}">
+
+    <link rel="manifest" href="{{ asset('favicon/open/site.webmanifest') }}">
+  @else
+    <link rel="apple-touch-icon" sizes="180x180"
+      href="{{ asset('favicon/closed/apple-touch-icon.png') }}">
+
+    <link rel="icon" type="image/png" sizes="32x32"
+      href="{{ asset('favicon/closed/favicon-32x32.png') }}">
+
+    <link rel="icon" type="image/png" sizes="16x16"
+      href="{{ asset('favicon/closed/favicon-16x16.png') }}">
+
+    <link rel="manifest" href="{{ asset('favicon/closed/site.webmanifest') }}">
+  @endif
+
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
