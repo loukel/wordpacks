@@ -16,7 +16,7 @@ class PacksController extends Controller {
   public function index() {
     // Lood packs
     $user_id = Auth::id();
-    $packs = Packs::where('user_id', $user_id)->get(['label']);
+    $packs = Packs::where('user_id', $user_id)->get();
     $public_packs = Packs::latest()->take(6)->get();
 
     return view('packs.index',[
@@ -37,27 +37,20 @@ class PacksController extends Controller {
   }
 
   public function create() {
-    $user_id = Auth::id();
     $pack = new Packs;
     $pack = Packs::create(array(
-      'user_id' => $user_id,
+      'user_id' => Auth::id(),
       'label' => 'New pack',
       'words' => Array(),
     ));
     return redirect(route('packs.show', $pack->id));
   }
 
-  public function add() {
-    // Define varaibles
-    if (isset($_POST['define'])) {
-      $mode = 'define';
-    } elseif (isset($_POST['custom'])) {
-      $mode = 'custom';
-    }
+  public function add($pack_id) {
+    $pack_id = sanitize_string($pack_id);
     $word = sanitize_string(request('word'));
-    $pack_id = sanitize_string(request('pack_id'));
 
-    if ($mode == "define") {
+    if (isset($_POST['define'])) {
       // Find the words senses in the dictionary
       $word_senses = Dictionary::where('word', strtoupper($word))->get(['pos', 'definitions']);
 
@@ -70,7 +63,7 @@ class PacksController extends Controller {
         $word_info = json_encode(array('word' => $word, 'senses' => $word_senses));
 
       }
-    } else {
+    } else if (isset($_POST['custom'])) {
       $word_info = json_encode(array('word' => $word, 'notes' => ''));
     }
 

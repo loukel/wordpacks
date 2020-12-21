@@ -17,11 +17,11 @@ Route::get('/', 'PacksController@index')->name('packs.index');
 
 Route::post('/create', 'PacksController@create')->name('packs.create')->middleware('auth');
 
-Route::post('/add', 'PacksController@add')->name('packs.add')->middleware('auth');
-
 Route::get('/{pack_id}', 'PacksController@show')->name('packs.show');
 
 Route::post('/{pack_id}/update', 'PacksController@update')->name('packs.update')->middleware('auth');
+
+Route::post('/{pack_id}/add', 'PacksController@add')->name('packs.add')->middleware('auth');
 
 Route::post('/{pack_id}/edit/{word}', 'PacksController@edit')->name('packs.edit')->middleware('auth');
 

@@ -12,9 +12,8 @@
     <div class="card mb-3">
       <div class="card-body">
         <form class="d-flex justify-content-center md-form form-sm mw-100 control" method="post"
-          action="{{ route('packs.add') }}">
+          action="{{ route('packs.add', $pack->id) }}">
           @csrf
-          <input type="hidden" name="pack_id" value="{{ $pack->id }}">
           <input class="form-control mr-2 w-75 flex-grow-1" type="text" placeholder="Add" aria-label="Add" name="word"
             autocomplete="off">
           <button class="btn btn-outline-dark mr-2" name="define">
@@ -81,7 +80,8 @@
             @endforeach
           @else
             <form id='form_{{ $word['word'] }}'>
-              <p class="note" data-placeholder="Edit to add Notes" onfocus="this.value = this.value;">{{ $word['notes'] }}</p>
+              <p class="note" data-placeholder="Edit to add Notes" onfocus="this.value = this.value;">
+                {{ $word['notes'] }}</p>
             </form>
           @endif
         </div>
