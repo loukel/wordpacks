@@ -23,15 +23,19 @@ class PacksController extends Controller {
   }
 
   public function index() {
-    // Lood packs
-    $user_id = Auth::id();
-    $packs = Packs::where('user_id', $user_id)->get();
+    // Get public packs
     $public_packs = Packs::latest()->take(6)->get();
 
-    // Meta Tags
-    $username = Auth::user()->username;
-    $pack_count = count($packs);
-    SEOMeta::setTitle("$username ($pack_count)");
+    $packs = array();
+    if (Auth::check()) {
+      // Get user's packs
+      $packs = Packs::where('user_id', Auth::id())->get();
+
+      // Meta Tags
+      $username = Auth::user()->username;
+      $pack_count = count($packs);
+      SEOMeta::setTitle("$username ($pack_count)");
+    }
 
     return view('packs.index',[
       'packs' => $packs,
