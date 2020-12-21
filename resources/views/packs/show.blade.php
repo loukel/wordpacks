@@ -3,17 +3,18 @@
 @section('content')
 
 <div class="container" id="container">
-  <div class="h1 text-center" {{ $is_creator ? 'contentEditable=true' : null }}
-    onfocusout="update_label('{{ $pack_id }}')" onkeydown="enter_check('{{ $pack_id }}')" id="label">
-    {{ $label }}
+  <div class="h1 text-center"
+    {{ $pack->user->id == Auth::id() ? 'contentEditable=true' : null }}
+    onfocusout="update_label('{{ $pack->id }}')" onkeydown="enter_check('{{ $pack->id }}')" id="label">
+    {{ $pack->label }}
   </div>
-  @if($is_creator)
+  @if($pack->user->id == Auth::id())
     <div class="card mb-3">
       <div class="card-body">
         <form class="d-flex justify-content-center md-form form-sm mw-100 control" method="post"
           action="{{ route('packs.add') }}">
           @csrf
-          <input type="hidden" name="pack_id" value="{{ $pack_id }}">
+          <input type="hidden" name="pack_id" value="{{ $pack->id }}">
           <input class="form-control mr-2 w-75 flex-grow-1" type="text" placeholder="Add" aria-label="Add" name="word"
             autocomplete="off">
           <button class="btn btn-outline-dark mr-2" name="define">
@@ -32,17 +33,17 @@
       </div>
     </div>
   @else
-    <small class="text-muted p-0 m-0">Created by: {{ $creator }}</small>
+    <small class="text-muted p-0 m-0">Created by: {{ $pack->user->username }}</small>
   @endif
   @if(!empty(session('error')))
     <p class="error" id="error">{{ session('error') }}</p>
   @endif
-  @if($words != null)
-    @foreach(array_reverse($words) as $word)
+  @if($pack->words != null)
+    @foreach(array_reverse($pack->words) as $word)
       <div class="card mb-3 word">
         <div class="card-header d-flex justify-content-between align-items-center">
           <h5>{{ ucfirst($word['word']) }}</h5>
-          @if($is_creator)
+          @if($pack->user->id == Auth::id())
             <div class="btn-toolbar" id="btns_{{ $word['word'] }}" role="group">
               @if(empty($word['senses']))
                 <button class="btn btn-sm btn-primary float-right edit"
@@ -50,12 +51,12 @@
                   Edit
                 </button>
                 <button class="btn btn-sm btn-success float-right update"
-                  onclick="update_note('{{ $pack_id }}','{{ $word['word'] }}')">
+                  onclick="update_note('{{ $pack->id }}','{{ $word['word'] }}')">
                   Update
                 </button>
               @endif
               <form
-                action="{{ route('packs.delete', ['pack_id' =>$pack_id,'word'=>$word['word']]) }}"
+                action="{{ route('packs.delete', ['pack_id' =>$pack->id,'word'=>$word['word']]) }}"
                 method="post">
                 @csrf
                 @method('DELETE')
@@ -80,7 +81,8 @@
             @endforeach
           @else
             <form id='form_{{ $word['word'] }}'>
-              <p class="note" data-placeholder="Edit to add Notes" onfocus="this.value = this.value;">{{ $word['notes'] }}</p>
+              <p class="note" data-placeholder="Edit to add Notes" onfocus="this.value = this.value;">
+                {{ $word['notes'] }}</p>
             </form>
           @endif
         </div>

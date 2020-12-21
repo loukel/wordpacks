@@ -43,6 +43,6 @@ class User extends Authenticatable
     ];
 
     public function packs() {
-      return $this->hasMany(Item::Class);
+      return $this->hasMany(Packs::Class);
     }
 }
