@@ -12,21 +12,15 @@ use App\Models\User;
 use App\Models\Packs;
 use App\Models\Dictionary;
 
-class PacksController extends Controller
-{
-  public function __construct()
-  {
-    // $this->middleware('auth');
-  }
-
+class PacksController extends Controller {
   public function index() {
     // Lood packs
     $user_id = Auth::id();
-    $packs = Packs::where('creator', $user_id)->get(['label']);
+    $packs = Packs::where('user_id', $user_id)->get(['label']);
 
-    $public_packs = Packs::all()->sortByDesc('created_at')->take(6);
+    $public_packs = Packs::latest()->take(6)->get();
     foreach($public_packs as &$pack) {
-      $pack['username'] = User::find($pack->creator)['username'];
+      $pack['username'] = User::find($pack->user_id)['username'];
     }
 
     return view('packs.index',[
@@ -40,7 +34,7 @@ class PacksController extends Controller
     $pack = Packs::find($pack_id);
     if (!empty($pack)) {
       // Find creator of the pack
-      $creator_id = $pack['creator'];
+      $creator_id = $pack['user_id'];
       $creator = User::find($creator_id)['username'];
       // Declare if the viewer created the pack, this should probably change to a laravel roles structure
       $is_creator = Auth::id() === $creator_id;
@@ -68,7 +62,7 @@ class PacksController extends Controller
     $user_id = Auth::id();
     $pack = new Packs;
     $pack = Packs::create(array(
-      'creator' => $user_id,
+      'user_id' => $user_id,
       'label' => 'New pack',
       'words' => Array(),
     ));
@@ -106,7 +100,7 @@ class PacksController extends Controller
     try {
       DB::collection('packs')
       ->where('_id', $pack_id)
-      ->where('creator', Auth::id())
+      ->where('user_id', Auth::id())
       ->push('words', json_decode($word_info, true), true);
 
     }
@@ -121,7 +115,7 @@ class PacksController extends Controller
     if (isset($_POST['label'])) {
       $label = sanitize_string($_POST['label']);
       try {
-        return DB::collection('packs')->where('_id', $pack_id)->where('creator', Auth::id())->update(['label' => $label]);
+        return DB::collection('packs')->where('_id', $pack_id)->where('user_id', Auth::id())->update(['label' => $label]);
       } catch (\Throwable $th) {
         return 'error: '.$th;
       }
@@ -132,7 +126,7 @@ class PacksController extends Controller
     if (isset($_POST['note'])) {
       $note = sanitize_string($_POST['note']);
       try {
-        return DB::collection('packs')->where('_id', $pack_id)->where('creator', Auth::id())->where('words.word',$word)->update(['words.$.notes' => $note]);
+        return DB::collection('packs')->where('_id', $pack_id)->where('user_id', Auth::id())->where('words.word',$word)->update(['words.$.notes' => $note]);
       } catch (\Throwable $th) {
         return 'error: '.$th;
       }
@@ -140,12 +134,12 @@ class PacksController extends Controller
   }
 
   public function delete($pack_id, $word) {
-    DB::collection('packs')->where('_id', $pack_id)->where('creator', Auth::id())->pull('words', ['word' => sanitize_string($word)], true);
+    DB::collection('packs')->where('_id', $pack_id)->where('user_id', Auth::id())->pull('words', ['word' => sanitize_string($word)], true);
     return redirect(route('packs.show', $pack_id));
   }
 
   public function destroy($pack_id) {
-    $pack = Packs::where('_id', sanitize_string($pack_id))->where('creator', Auth::id());
+    $pack = Packs::where('_id', sanitize_string($pack_id))->where('user_id', Auth::id());
     try {
       $pack->delete();
     } catch (\Throwable $th) {
@@ -155,8 +149,7 @@ class PacksController extends Controller
   }
 }
 
-function sanitize_string($var)
-{
+function sanitize_string($var) {
   $var = strip_tags($var);
   $var = htmlentities($var);
   return stripslashes($var);
