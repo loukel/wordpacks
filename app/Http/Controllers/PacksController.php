@@ -24,7 +24,7 @@ class PacksController extends Controller {
 
   public function index() {
     // Get public packs
-    $public_packs = Packs::latest()->take(6)->get();
+    $public_packs = Packs::latest()->get(); //->take(6)
 
     $packs = array();
     if (Auth::check()) {

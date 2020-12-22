@@ -43,14 +43,14 @@
         <div class="card-header d-flex justify-content-between align-items-center">
           <h5>{{ ucfirst($word['word']) }}</h5>
           @if($pack->user->id == Auth::id())
-            <div class="btn-toolbar" id="btns_{{ $word['word'] }}" role="group">
+            <div class="btn-toolbar" id="btns_{{ addslashes($word['word']) }}" role="group">
               @if(empty($word['senses']))
                 <button class="btn btn-sm btn-primary float-right edit"
-                  onclick="make_editable('{{ $word['word'] }}')">
+                  onclick="make_editable('{{ addslashes($word['word']) }}')">
                   Edit
                 </button>
                 <button class="btn btn-sm btn-success float-right update"
-                  onclick="update_note('{{ $pack->id }}','{{ $word['word'] }}')">
+                  onclick="update_note('{{ $pack->id }}','{{ addslashes($word['word']) }}')">
                   Update
                 </button>
               @endif
@@ -79,7 +79,7 @@
               </div>
             @endforeach
           @else
-            <form id='form_{{ $word['word'] }}'>
+            <form id='form_{{ addslashes($word['word']) }}'>
               <p class="note" data-placeholder="Edit to add Notes" onfocus="this.value = this.value;">{{ $word['notes'] }}</p>
             </form>
           @endif
@@ -99,10 +99,11 @@
 
 @section('scripts')
 <script>
-  setTimeout(function () {
-    error = document.getElementById('error');
-    error.style.display = "none";
-  }, 1000)
+  if (error = document.getElementById('error'))
+    setTimeout(function () {
+      error.style.display = "none";
+    }, 1000);
+
 
   function enter_check(pack_id) {
     if (event.key === 'Enter') {
@@ -133,14 +134,14 @@
   }
 
   function make_editable(word) {
-    var note = document.getElementById('form_' + word).getElementsByTagName('p')[0];
+    var note = document.getElementById('form_' + word.replace(/'/g, "\\'")).getElementsByTagName('p')[0];
     note.contentEditable = true;
     note.focus();
-    document.getElementById('btns_' + word).classList.toggle('editing');
+    document.getElementById('btns_' + word.replace(/'/g, "\\'")).classList.toggle('editing');
   }
 
   function update_note(pack_id, word) {
-    var note = document.getElementById('form_' + word).getElementsByTagName('p')[0];
+    var note = document.getElementById('form_' + word.replace(/'/g, "\\'")).getElementsByTagName('p')[0];
     note.contentEditable = false;
 
     params = "note=" + note.innerHTML;
@@ -161,7 +162,7 @@
     }
     request.send(params);
 
-    buttons = document.getElementById('btns_' + word);
+    buttons = document.getElementById('btns_' + word.replace(/'/g, "\\'"));
     buttons.classList.toggle('editing');
     buttons.focus();
   }
