@@ -100,7 +100,7 @@
 @section('scripts')
 <script>
   if (error = document.getElementById('error'))
-    setTimeout(function () {
+    setTimeout( () => {
       error.style.display = "none";
     }, 1000);
 
