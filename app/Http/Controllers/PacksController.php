@@ -26,7 +26,7 @@ class PacksController extends Controller {
     // Get public packs
     $public_packs = Packs::latest()->get(); //->take(6)
 
-    $packs = array();
+    // $packs = array();
     if (Auth::check()) {
       // Get user's packs
       $packs = Packs::where('user_id', Auth::id())->get();
@@ -35,10 +35,14 @@ class PacksController extends Controller {
       $username = Auth::user()->username;
       $pack_count = count($packs);
       SEOMeta::setTitle("$username ($pack_count)");
+
+      return view('packs.index',[
+        'packs' => $packs,
+        'public_packs' => $public_packs,
+      ]);
     }
 
     return view('packs.index',[
-      'packs' => $packs,
       'public_packs' => $public_packs,
     ]);
   }
