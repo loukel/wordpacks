@@ -11,5 +11,5 @@ Wordpacks is a web app which allows users to store the definitions for words in 
 2. `composer install`
 3. `cp .example.env .env`
 4. `php artisan key:generate`
-5. `php artisan migrate` <br>
-To test: `php artisan serve` and go to link
+5. `php artisan migrate`
+6. To test: `php artisan serve` and go to link
